@@ -65,6 +65,7 @@ angle install aframe-preloader-component
 ```
 -->
 
+<!--
 #### npm
 
 Install via npm:
@@ -79,3 +80,4 @@ Then require and use.
 require('aframe');
 require('aframe-preloader-component');
 ```
+-->
