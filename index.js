@@ -232,7 +232,7 @@ AFRAME.registerSystem('preloader', {
                 '<div id="'+this.data.id+'" class="modal instructions-modal" tabindex="-1" role="dialog">'+
                 '<div class="modal-dialog modal-dialog__full" role="document">'+
                 '<div class="modal-content vertical-align text-center">'+
-                '<div class="col-md-6 col-md-offset-3">'+
+                '<div class="col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-3">'+
                 '<div class="progress">'+
                 '<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">'+
                 '<span class="progress-label">Loading 0% Complete</span>'+
@@ -254,7 +254,7 @@ AFRAME.registerSystem('preloader', {
                 '<h4 class="modal-title">'+this.data.title+'</h4>'+
                 '</div>'+
                 '<div class="modal-body">' +
-                '<div class="col-md-6 col-md-offset-3">'+
+                '<div class="col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-3">'+
                 '<div class="progress">'+
                 '<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">'+
                 '<span class="progress-label">Loading 0% Complete</span>'+
