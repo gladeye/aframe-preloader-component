@@ -34,13 +34,22 @@ For [A-Frame](https://aframe.io).
 
 #### Browser
 
-Install and use by directly including the [browser files](dist):
+Install and use by directly including the [browser files](dist) as well as Bootstrap CSS and JS as well as jQuery 1.12.x:
 
 ```html
 <head>
   <title>My A-Frame Scene</title>
+  
+  <!-- Bootstrap Bootswatch theme CSS - other themes available here: https://bootswatch.com -->
+  <link rel="stylesheet" href="https://cdn.rawgit.com/thomaspark/bootswatch/gh-pages/slate/bootstrap.min.css" />
+  
+  <!-- Bootstrap JS Dependencies -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+  <!-- A-Frame JS Dependencies -->
   <script src="https://aframe.io/releases/0.6.0/aframe.min.js"></script>
-  <script src="https://unpkg.com/aframe-preloader-component/dist/aframe-preloader-component.min.js"></script>
+  <script src="https://cdn.unpkg.com/aframe-preloader-component/1.0.0/aframe-preloader-component.min.js"></script>
 </head>
 
 <body>
