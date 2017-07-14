@@ -49,7 +49,7 @@ Install and use by directly including the [browser files](dist) as well as Boots
 
   <!-- A-Frame JS Dependencies -->
   <script src="https://aframe.io/releases/0.6.0/aframe.min.js"></script>
-  <script src="https://cdn.unpkg.com/aframe-preloader-component/1.0.0/aframe-preloader-component.min.js"></script>
+  <script src="https://unpkg.com/aframe-preloader-component/1.0.0/aframe-preloader-component.min.js"></script>
 </head>
 
 <body>
