@@ -47,18 +47,7 @@
 </div>
 
 <!-- slowLoad: true is only for demo purposes -->
-<a-scene preloader="
-  autoInject: false;
-  clickToClose: false;
-  autoClose: true;
-  target: #preloader-modal;
-  bar: #preloader-modal .progress-bar;
-  label: #preloader-modal .progress-label;
-  labelText: Loading {0}%;
-  slowLoad: true;
-  debug: true;
-  doneLabelText: Done! Hold tight...;
-  ">
+<a-scene preloader="autoInject: false; clickToClose: false; autoClose: true; target: #preloader-modal; bar: #preloader-modal .progress-bar; label: #preloader-modal .progress-label; labelText: Loading {0}%; slowLoad: true; debug: true; doneLabelText: Done! Hold tight...;">
   <a-assets>
     <a-asset-item id="aframe-model" src="../assets/ply/aframe.ply" preload="true"></a-asset-item>
     <img id="ground-texture" src="https://cdn.aframe.io/a-painter/images/floor.jpg" crossorigin="anonymous" preload="true">
