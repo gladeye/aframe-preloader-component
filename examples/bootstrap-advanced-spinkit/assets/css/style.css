@@ -1,0 +1,118 @@
+#preloader-modal .preloader-modal__spinner{
+    display: inline-block;
+    margin-bottom: 2em;
+}
+
+#preloader-modal .preloader-modal__spinner{
+    transform: scale3d(2,2,1);
+}
+
+#preloader-modal .btn{
+    margin-top: 2em;
+}
+
+/* SPINKIT CUSTOMIZATION CLASSES */
+
+
+/* sk-rotating-plane */
+
+#preloader-modal.preloader-modal__complete .preloader-modal__spinner.sk-rotating-plane{
+    background-color: #009900;
+}
+
+#preloader-modal .preloader-modal__spinner.sk-rotating-plane{
+    background-color: #c8c8c8;
+}
+
+/* sk-double-bounce */
+
+#preloader-modal .preloader-modal__spinner.sk-double-bounce .sk-child{
+    background-color: #c8c8c8;
+}
+
+#preloader-modal.preloader-modal__complete .preloader-modal__spinner.sk-double-bounce .sk-child{
+    background-color: #009900;
+}
+
+/* sk-wave */
+
+#preloader-modal .preloader-modal__spinner.sk-wave .sk-rect{
+    background-color: #c8c8c8;
+}
+
+#preloader-modal.preloader-modal__complete .preloader-modal__spinner.sk-wave .sk-rect{
+    background-color: #009900;
+}
+
+/* sk-wandering-cubes */
+
+#preloader-modal .preloader-modal__spinner.sk-wandering-cubes .sk-cube{
+    background-color: #c8c8c8;
+}
+
+#preloader-modal.preloader-modal__complete .preloader-modal__spinner.sk-wandering-cubes .sk-cube{
+    background-color: #009900;
+}
+
+/* sk-spinner-pulse */
+
+#preloader-modal .preloader-modal__spinner.sk-spinner-pulse{
+    background-color: #c8c8c8;
+}
+
+#preloader-modal.preloader-modal__complete .preloader-modal__spinner.sk-spinner-pulse{
+    background-color: #009900;
+}
+
+/* sk-chasing-dots */
+
+#preloader-modal .preloader-modal__spinner.sk-chasing-dots{
+    transform: none;
+}
+
+#preloader-modal .preloader-modal__spinner.sk-chasing-dots .sk-child{
+    background-color: #c8c8c8;
+}
+
+#preloader-modal.preloader-modal__complete .preloader-modal__spinner.sk-chasing-dots .sk-child{
+    background-color: #009900;
+}
+
+/* sk-three-bounce */
+
+#preloader-modal .preloader-modal__spinner.sk-three-bounce .sk-child{
+    background-color: #c8c8c8;
+}
+
+#preloader-modal.preloader-modal__complete .preloader-modal__spinner.sk-three-bounce .sk-child{
+    background-color: #009900;
+}
+
+/* sk-cube-grid */
+
+#preloader-modal .preloader-modal__spinner.sk-cube-grid .sk-cube{
+    background-color: #c8c8c8;
+}
+
+#preloader-modal.preloader-modal__complete .preloader-modal__spinner.sk-cube-grid .sk-cube{
+    background-color: #009900;
+}
+
+/* sk-folding-cube */
+
+#preloader-modal .preloader-modal__spinner.sk-folding-cube .sk-cube{
+    background-color: #c8c8c8;
+}
+
+    #preloader-modal .preloader-modal__spinner.sk-folding-cube .sk-cube:before{
+        background-color: #535353;
+    }
+
+#preloader-modal.preloader-modal__complete .preloader-modal__spinner.sk-folding-cube .sk-cube{
+    background-color: #009900;
+}
+
+    #preloader-modal.preloader-modal__complete .preloader-modal__spinner.sk-folding-cube .sk-cube:before{
+        background-color: #004700;
+    }
+
