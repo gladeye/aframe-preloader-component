@@ -26,6 +26,26 @@
 
 </head>
 <body>
+
+<div id="preloader-modal" class="modal instructions-modal" tabindex="-1" role="dialog" style="display: none;">
+  <div class="modal-dialog modal-dialog__full" role="document">
+    <div class="modal-content vertical-align text-center">
+      <div class="col-md-6 col-md-offset-3">
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="preloader-modal__spinner sk-spinner sk-rotating-plane" aria-hidden="true"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <span class="progress-label">Loading 0%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- slowLoad: true is only for demo purposes -->
 <a-scene preloader="
   autoInject: false;
@@ -54,25 +74,6 @@
   <a-light type="point" intensity="2" position="2 4 4"></a-light>
   <a-sky height="2048" radius="30" src="#sky-texture" theta-length="90" width="2048"></a-sky>
 </a-scene>
-
-<div id="preloader-modal" class="modal instructions-modal" tabindex="-1" role="dialog" style="display: none;">
-  <div class="modal-dialog modal-dialog__full" role="document">
-    <div class="modal-content vertical-align text-center">
-      <div class="col-md-6 col-md-offset-3">
-        <div class="row">
-          <div class="col-xs-12">
-            <div class="preloader-modal__spinner sk-spinner sk-rotating-plane" aria-hidden="true"></div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-12">
-            <span class="progress-label">Loading 0%</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 
 <!-- GitHub Corner. -->
 <a href="https://github.com/gladeye/aframe-preloader-component" class="github-corner">
