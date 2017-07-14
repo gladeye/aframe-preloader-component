@@ -1,0 +1,26 @@
+{
+  "name": "aframe-preloader-bootstrap-advanced-spinkit",
+  "homepage": "https://github.com/gladeye/aframe-preloader-component",
+  "authors": [
+    "Michael Andrew <michael.andrew@gladeye.com>"
+  ],
+  "description": "Advanced example for A-Frame Preloader component using Spinkit",
+  "main": "index.html",
+  "keywords": [
+    "preloader",
+    "spinner",
+    "loading"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "SpinKit": "spinkit#^1.2.5"
+  }
+}

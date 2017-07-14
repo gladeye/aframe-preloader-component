@@ -1,0 +1,13 @@
+#preloader-modal.preloader-modal__complete .preloader-modal__ok, #preloader-modal .preloader-modal__spinner{
+    display: inline-block;
+    margin-bottom: 0.5em;
+}
+
+#preloader-modal.preloader-modal__complete .preloader-modal__spinner, #preloader-modal .preloader-modal__ok{
+    display: none;
+    margin-bottom: 0.5em;
+}
+
+#preloader-modal .btn{
+    margin-top: 2em;
+}
