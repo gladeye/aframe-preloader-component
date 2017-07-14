@@ -28,7 +28,7 @@ if (!String.prototype.format) {
  */
 AFRAME.registerSystem('preloader', {
     schema: {
-        type: { type: 'string', default: 'bootstrap' }, //acceptable values are: 'bootstrap' or 'custom'
+        type: { type: 'string', default: 'bootstrap' }, //type of CSS framework to use - acceptable values are: 'bootstrap' or 'custom'
         id: {type: 'string', default: 'preloader-modal'}, //ID of the auto injected preloader modal
         autoInject: { type: 'boolean', default: true }, //whether or not to auto-inject the preloader html into the page
         target: { type: 'selector', default: '#preloader-modal'}, //the html target selector
