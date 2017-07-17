@@ -1,7 +1,7 @@
 ## aframe-preloader-component
 
-[![Version](http://img.shields.io/npm/v/aframe-preloader-component.svg?style=flat-square)](https://npmjs.org/package/aframe-preloader-component)
-[![License](http://img.shields.io/npm/l/aframe-preloader-component.svg?style=flat-square)](https://npmjs.org/package/aframe-preloader-component)
+[![Version](http://img.shields.io/npm/v/@gladeye/aframe-preloader-component.svg?style=flat-square)](https://npmjs.org/package/@gladeye/aframe-preloader-component)
+[![License](http://img.shields.io/npm/l/@gladeye/aframe-preloader-component.svg?style=flat-square)](https://npmjs.org/package/@gladeye/aframe-preloader-component)
 
 A preloading bar that automatically displays while scene assets load.
 
@@ -86,5 +86,8 @@ Then require and use.
 
 ```js
 require('aframe');
+require('bootstrap');
 require('@gladeye/aframe-preloader-component');
 ```
+
+Make sure that Bootstrap's CSS classes are included in your HTML.
