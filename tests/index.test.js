@@ -1,5 +1,7 @@
 /* global assert, setup, suite, test */
 require('aframe');
+require('jquery');
+require('bootstrap');
 require('../index.js');
 var entityFactory = require('./helpers').entityFactory;
 

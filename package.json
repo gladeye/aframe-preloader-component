@@ -69,5 +69,9 @@
       "examples/build.js",
       "dist/**"
     ]
+  },
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "jquery": "^1.12.4"
   }
 }
