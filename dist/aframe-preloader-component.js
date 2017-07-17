@@ -74,7 +74,8 @@
 	 */
 	AFRAME.registerSystem('preloader', {
 	    schema: {
-	        type: { type: 'string', default: 'bootstrap' }, //acceptable values are: 'bootstrap' or 'custom'
+	        type: { type: 'string', default: 'bootstrap' }, //type of CSS framework to use - acceptable values are: 'bootstrap' or 'custom'
+	        id: {type: 'string', default: 'preloader-modal'}, //ID of the auto injected preloader modal
 	        autoInject: { type: 'boolean', default: true }, //whether or not to auto-inject the preloader html into the page
 	        target: { type: 'selector', default: '#preloader-modal'}, //the html target selector
 	        progressValueAttr:  { type: 'string', default: 'aria-valuenow' },//an attribute of the progress bar to set when progress is updated
@@ -86,7 +87,10 @@
 	        clickToClose: { type: 'boolean', default: false}, //whether the user must click a button to close the modal when preloading is finished
 	        closeLabelText: { type: 'string', default: 'Continue'}, //default label text of click to close button
 	        title: { type: 'string', default: ''}, //title of preloader modal
-	        debug: { type: 'boolean', default: true} //whether or not to enable logging to console
+	        debug: { type: 'boolean', default: false}, //whether or not to enable logging to console
+	        disableVRModeUI: { type: 'boolean', default: true}, //whether or not to disable VR Mode UI when preloading
+	        slowLoad: { type: 'boolean', default: false}, //deliberately slow down the load progress by adding 2 second delays before updating progress - used to showcase loader on fast connections and should not be enabled in production
+	        doneLabelText: { type: 'string', default: 'Done'} //text to set on label when loading is complete
 	    },
 
 	    /**
@@ -96,6 +100,8 @@
 
 	    loadedAssetCount: 0, //total number of assets loaded
 	    totalAssetCount: 0, //total number of assets to load
+	    slowLoadTimeAssetUpdate: 1000, //length of time to slow down asset load progress if slowLoad is set to 'true'
+	    slowLoadTimePreloadFinish: 4000, //length of time to slow down preload finish if slowLoad is set to 'true'
 
 	    /**
 	     * Called once when component is attached. Generally for initial setup.
@@ -118,7 +124,8 @@
 
 	        }.bind(this));
 
-	        var assetItems = document.querySelectorAll('a-asset-item[preload="auto"],img[preload="auto"],audio[preload="auto"],video[preload="auto"]');
+	        var assetItems = document.querySelectorAll('a-assets a-asset-item,a-assets img,a-assets audio,a-assets video');
+
 	        this.totalAssetCount = assetItems.length;
 
 	        this.watchPreloadProgress(assetItems);
@@ -128,6 +135,19 @@
 	                console.info('No preloader html found, auto-injecting');
 	            }
 	            this.injectHTML();
+	        }else{
+	            switch(this.data.type){
+	                case 'bootstrap':
+	                    this.initBootstrapModal($(this.data.target));
+	                    break;
+	                default:
+	                    //do nothing
+	                    break;
+	            }
+	        }
+
+	        if(this.data.disableVRModeUI){
+	            this.el.setAttribute('vr-mode-ui','enabled','false');
 	        }
 	    },
 
@@ -143,10 +163,26 @@
 	     */
 	    watchPreloadProgress: function(assetItems){
 	        for (var a = 0; a < assetItems.length; a++) {
-	            assetItems[a].addEventListener('loaded',function(){
+
+	            var eventName;
+
+	            switch(assetItems[a].nodeName){
+	                case 'A-ASSET-ITEM':
+	                    eventName = 'loaded';
+	                    break;
+	                case 'img':
+	                    eventName = 'load';
+	                    break;
+	                case 'audio':
+	                case 'video':
+	                    eventName = 'loadeddata';
+	                    break;
+	            }
+
+	            assetItems[a].addEventListener(eventName,function(e){
 	                this.loadedAssetCount++;
 	                if(this.data.debug) {
-	                    console.info('Loaded ' + this.loadedAssetCount + '/' + this.totalAssetCount.length + ' asset items');
+	                    console.info('Loaded ' + this.loadedAssetCount + '/' + this.totalAssetCount + ' asset items');
 	                }
 	                this.onAssetLoaded();
 	            }.bind(this));
@@ -157,23 +193,52 @@
 	        if(this.loadedAssetCount === this.totalAssetCount){
 	            this.triggerProgressComplete();
 	        }else{
-	            var percentage = this.loadedAssetCount/this.totalAssetCount*100;
-	            this.drawProgress(percentage);
+	            var percentage = Math.floor(this.loadedAssetCount/this.totalAssetCount*100);
+	            if(this.data.slowLoad) {
+	                setTimeout(function () {
+	                    this.drawProgress(percentage);
+	                }.bind(this), this.slowLoadTimeAssetUpdate)
+	            }else{
+	                this.drawProgress(percentage);
+	            }
 	        }
 	    },
 
 	    triggerProgressComplete: function(){
 
-	        this.drawProgress(100);
+	        if(this.data.slowLoad){
+	            setTimeout(function(){
+	                if(this.data.type === 'bootstrap') $(this.data.bar).addClass('progress-bar-success');
+	                this.drawProgress(100);
+	                this.data.target.classList.add('preloader-modal__complete');
+	            }.bind(this),this.slowLoadTimePreloadFinish-1000);
+	        }else{
+	            if(this.data.type === 'bootstrap') $(this.data.bar).addClass('progress-bar-success');
+	            this.drawProgress(100);
+	            this.data.target.classList.add('preloader-modal__complete');
+	        }
 
 	        if(this.data.autoClose && !this.data.clickToClose){
-	            setTimeout(function(){
+	            if(this.data.slowLoad){
+	                setTimeout(function(){
+	                    this.triggerPreloadingComplete();
+	                    this.closeModal();
+	                }.bind(this),this.slowLoadTimePreloadFinish)
+	            }else{
 	                this.triggerPreloadingComplete();
 	                this.closeModal();
-	            }.bind(this),2000)
+	            }
+
 	        }else{
-	            if(this.data.clickToClose){
-	                this.closeBtn.setAttribute('style','display: inline-block');
+	            if(this.closeBtn && this.data.clickToClose){
+	                if(this.data.slowLoad){
+	                    setTimeout(function(){
+	                        this.closeBtn.setAttribute('style','display: inline-block');
+	                    }.bind(this),this.slowLoadTimePreloadFinish)
+	                }else{
+	                    this.closeBtn.setAttribute('style','display: inline-block');
+	                }
+
 	            }
 	        }
 	    },
@@ -181,7 +246,7 @@
 	    drawProgress: function(percentage){
 	        //update loading bar if exists
 	        if(this.data.label){
-	            this.data.label.innerHTML = this.data.labelText.format(percentage);
+	            this.data.label.innerHTML = (percentage === 100) ? this.data.doneLabelText : this.data.labelText.format(percentage);
 	        }
 
 	        if(this.data.bar){
@@ -210,22 +275,64 @@
 	        if(!this.data.title){
 	            //full screen modal
 	            var $modal = $('' +
-	                '<div id="preloader-modal" class="modal instructions-modal" tabindex="-1" role="dialog">'+
+	                '<div id="'+this.data.id+'" class="modal instructions-modal" tabindex="-1" role="dialog">'+
 	                '<div class="modal-dialog modal-dialog__full" role="document">'+
 	                '<div class="modal-content vertical-align text-center">'+
-	                '<div class="col-md-6 col-md-offset-3">'+
+	                '<div class="col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-3">'+
 	                '<div class="progress">'+
 	                '<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">'+
 	                '<span class="progress-label">Loading 0% Complete</span>'+
 	                '</div>'+
 	                '</div>'+
-	                ((this.data.clickToClose) ? '<button type="button" class="close-btn btn btn-default" data-dismiss="modal" style="display: none;">Continue</button>' : '' )+
+	                ((this.data.clickToClose) ? '<button type="button" class="close-btn btn btn-default" data-dismiss="modal">Continue</button>' : '' )+
 	                '</div>'+
 	                '</div>'+
 	                '</div>'+
 	                '</div>'+
 	                '');
+	        }else{
+	            //regular modal
+	            var $modal = $('' +
+	                '<div id="'+this.data.id+'" class="modal instructions-modal" tabindex="-1" role="dialog">'+
+	                '<div class="modal-dialog modal-dialog__full" role="document">'+
+	                '<div class="modal-content">'+
+	                '<div class="modal-header">'+
+	                '<h4 class="modal-title">'+this.data.title+'</h4>'+
+	                '</div>'+
+	                '<div class="modal-body">' +
+	                '<div class="col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-3">'+
+	                '<div class="progress">'+
+	                '<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">'+
+	                '<span class="progress-label">Loading 0% Complete</span>'+
+	                '</div>'+
+	                '</div>'+
+	                '</div>'+
+	                '</div>'+
+	                '<div class="modal-footer">'+
+	                ((this.data.clickToClose) ? '<button type="button" class="close-btn btn btn-default" data-dismiss="modal">Continue</button>' : '' )+
+	                '</div>'+
+	                '</div>'+
+	                '</div>'+
+	                '</div>'+
+	                '');
+	        }
 
+	        $('body').append($modal);
+
+	        this.data.target = $modal[0];
+	        this.data.label = $modal.find('.progress-label')[0];
+	        this.data.bar = $modal.find('.progress-bar')[0];
+
+	        this.initBootstrapModal($modal);
+	    },
+
+	    initBootstrapModal: function($modal){
+	        $modal.modal({
+	            backdrop: 'static',
+	            keyboard: false
+	        });
+
+	        if(!this.data.title){
 	            var $modalStyle = $('<style>' +
 	                '.vertical-align {'+
 	                'display: flex;'+
@@ -244,56 +351,31 @@
 	                '}' +
 	                '</style>');
 	            $('head').append($modalStyle);
-	        }else{
-	            //regular modal
-	            var $modal = $('' +
-	                '<div id="preloader-modal" class="modal instructions-modal" tabindex="-1" role="dialog">'+
-	                '<div class="modal-dialog modal-dialog__full" role="document">'+
-	                '<div class="modal-content">'+
-	                '<div class="modal-header">'+
-	                '<h4 class="modal-title">'+this.data.title+'</h4>'+
-	                '</div>'+
-	                '<div class="modal-body">' +
-	                '<div class="col-md-6 col-md-offset-3">'+
-	                '<div class="progress">'+
-	                '<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">'+
-	                '<span class="progress-label">Loading 0% Complete</span>'+
-	                '</div>'+
-	                '</div>'+
-	                '</div>'+
-	                '</div>'+
-	                '<div class="modal-footer">'+
-	                ((this.data.clickToClose) ? '<button type="button" class="close-btn btn btn-default" data-dismiss="modal" style="display: none;">Continue</button>' : '' )+
-	                '</div>'+
-	                '</div>'+
-	                '</div>'+
-	                '</div>'+
-	                '');
 	        }
 
-	        $modal.modal({
-	            backdrop: 'static',
-	            keyboard: false
-	        });
+	        if(this.data.clickToClose){
+	            var $closeBtn = $modal.find('[data-dismiss=modal]');
 
-	        $('body').append($modal);
+	            if($closeBtn.length > 0){
+	                this.closeBtn = $closeBtn[0];
 
-	        this.data.target = $modal[0];
-	        this.data.label = $modal.find('.progress-label')[0];
-	        this.data.bar = $modal.find('.progress-bar')[0];
-	        var $closeBtn = $modal.find('[data-dismiss=modal]');
+	                this.closeBtn.setAttribute('style','display: none');
 
-	        if($closeBtn){
-	            this.closeBtn = $closeBtn[0];
-	            $modal.on('hidden.bs.modal', function (e) {
-	                this.triggerPreloadingComplete();
-	            }.bind(this))
+	                $modal.on('hidden.bs.modal', function (e) {
+	                    this.triggerPreloadingComplete();
+	                }.bind(this))
+	            }else{
+	                console.error('No Bootstrap modal close button is set in the HTML. Please add a button with the data-dismiss="modal" attribute to use clickToClose.');
+	            }
 	        }
 	    },
 
 	    triggerPreloadingComplete: function(){
 	        if(this.data.debug){
 	            console.info('Preloading complete');
+	        }
+	        if(this.data.disableVRModeUI){
+	            this.el.setAttribute('vr-mode-ui','enabled','true');
 	        }
 	        this.el.emit('preloading-complete');
 	    },
