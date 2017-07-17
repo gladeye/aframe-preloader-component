@@ -19,9 +19,9 @@ suite('preloader component', function () {
     el.setAttribute('preloader', {});
   });
 
-  suite('foo property', function () {
+  /*suite('foo property', function () {
     test('is good', function () {
       assert.equal(1, 1);
     });
-  });
+  });*/
 });
