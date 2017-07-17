@@ -1,5 +1,5 @@
 {
-  "name": "aframe-preloader-component",
+  "name": "@gladeye/aframe-preloader-component",
   "version": "1.0.0",
   "description": "A preloading animation that automatically displays while scene assets load.",
   "main": "index.js",

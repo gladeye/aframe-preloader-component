@@ -70,23 +70,21 @@ version of the component straight into your HTML file, respective to your
 version of A-Frame:
 
 ```sh
-angle install aframe-preloader-component
+angle install @gladeye/aframe-preloader-component
 ```
 -->
 
-<!--
 #### npm
 
 Install via npm:
 
 ```bash
-npm install aframe-preloader-component
+npm install @gladeye/aframe-preloader-component
 ```
 
 Then require and use.
 
 ```js
 require('aframe');
-require('aframe-preloader-component');
+require('@gladeye/aframe-preloader-component');
 ```
--->
