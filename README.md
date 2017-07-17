@@ -29,6 +29,9 @@ For [A-Frame](https://aframe.io).
 | slowLoad          | deliberately slow down the load progress by adding 2 second delays before updating progress - used to showcase loader on fast connections and should not be enabled in production | slowLoad |
 | doneLabelText     | text to set on label when loading is complete                                 | Done             |
 
+### Examples
+
+See the `examples` folder or [https://gladeye.github.io/aframe-preloader-component/](here) for example usage.
 
 ### Installation
 
