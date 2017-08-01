@@ -31,7 +31,7 @@ For [A-Frame](https://aframe.io).
 
 ### Examples
 
-See the `examples` folder or [https://gladeye.github.io/aframe-preloader-component/](here) for example usage.
+See the `examples` folder or https://gladeye.github.io/aframe-preloader-component/ for example usage.
 
 ### Installation
 
