@@ -120,8 +120,8 @@ AFRAME.registerSystem('preloader', {
 
             var eventName;
 
-            switch(assetItems[a].nodeName){
-                case 'A-ASSET-ITEM':
+            switch(assetItems[a].nodeName.toLowerCase()){
+                case 'a-asset-item':
                     eventName = 'loaded';
                     break;
                 case 'img':
