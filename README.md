@@ -52,7 +52,7 @@ Install and use by directly including the [browser files](dist) as well as Boots
 
   <!-- A-Frame JS Dependencies -->
   <script src="https://aframe.io/releases/0.6.0/aframe.min.js"></script>
-  <script src="https://cdn.rawgit.com/gladeye/aframe-preloader-component/1.0.0/dist/aframe-preloader-component.min.js"></script>
+  <script src="https://cdn.rawgit.com/gladeye/aframe-preloader-component/1.0.2/dist/aframe-preloader-component.min.js"></script>
 </head>
 
 <body>
